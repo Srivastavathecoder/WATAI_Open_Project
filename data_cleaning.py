@@ -1,14 +1,18 @@
 import pandas as pd
 
 # Load data and skip first row
-df = pd.read_csv("stocks.csv", skiprows=1)
+df = pd.read_csv("stocks.csv", skiprows=1, header=None)
 
-# Using first row as column headers instead
-df.columns = df.iloc[0]
-df = df[2:].reset_index(drop=True)
+# Naming columns
+column_names = ["Date", "QQQ_Close", "SPY_Close", "XIU_Close", 
+                "QQQ_High", "SPY_High", "XIU_High", 
+                "QQQ_Low", "SPY_Low", "XIU_Low", 
+                "QQQ_Open", "SPY_Open", "XIU_Open", 
+                "QQQ_Volume", "SPY_Volume", "XIU_Volume"]
+df.columns = column_names
 
-# Renaming first column to date
-df = df.rename(columns = {df.columns[0]: "Date"})
+# Reset index
+df = df[1:].reset_index(drop=True)  
 
 # Deleting rows if they are missing a date
 df = df.dropna(subset=["Date"])
